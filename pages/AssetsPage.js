@@ -29,12 +29,6 @@ export default class AssetsPage {
       throw error;
     }
   }
-  
-  // async navigateToAssets() {
-  //   await this.spManagedMenu.click();
-  //   await this.assetsSubmenu.click();
-  //   await expect(this.page.locator('button[title="New Item"]')).toBeVisible({ timeout: 20000 });
-  // }
 
   async uploadFile(filePath) {
     await this.uploadButton.click();
@@ -53,11 +47,6 @@ export default class AssetsPage {
     
   }
 
-  // async saveUploadedImage(){
-  //   await this.saveButton.click({ timeout: 20000 });
-  //   await expect(this.spManagedMenu).toBeVisible({ timeout: 20000 });
-    
-  // }
   async saveUploadedImage() {
     await this.saveButton.waitFor({ state: 'visible', timeout: 10000 });
     await this.saveButton.click({ timeout: 50000 });
@@ -79,7 +68,6 @@ export default class AssetsPage {
     expect(src).not.toContain('placeholder'); 
   }
 
-
   async selectFile(){
 
     const fileLocator = this.page.locator('.chakra-stack.mb-grid__row.css-mvgvg4').nth(0);
@@ -100,7 +88,6 @@ export default class AssetsPage {
 
   }
 
-
   async clickSave(){
 
     const editButton = this.page.locator('button.chakra-button._s_SaveItem.css-rce95w');
@@ -113,18 +100,15 @@ export default class AssetsPage {
     await close.click();
   }
 
-
   async isEditButtonVisible() {
     const editButton = this.page.locator('button.chakra-button._s_Edit.css-rce95w');
     await expect(editButton).toBeVisible();
   }
 
-
   async isSaveButtonVisible() {
     const saveButton = this.page.locator('button.chakra-button._s_SaveItem.css-rce95w');
     await expect(saveButton).toBeVisible();
   }
-
 
   async isOnAssetsPage() {
     await expect(this.uploadButton).toBeVisible({ timeout: 10000 });
@@ -134,13 +118,10 @@ export default class AssetsPage {
   async isTitleVisibleInList(updatedTitle) {
     await expect(this.page.locator(`text=${updatedTitle}`)).toBeVisible();
   }
-
-  
+ 
   async clickCheckbox() {
     const checkBox = this.page.locator(`.chakra-checkbox__control.css-1p9wxqe`).nth(2);
     await checkBox.click();
-    
-
   }
   
   async clickShare() {
@@ -155,18 +136,16 @@ export default class AssetsPage {
   async setEmail(email) {
     const modal = this.page.locator('.chakra-modal__content-container');
     await modal.waitFor({ state: 'visible', timeout: 5000 });
-  
     const input = modal.locator('input.mb-tag-field__input').first();
   
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
         await input.waitFor({ state: 'visible', timeout: 3000 });
-        
         await input.fill(email, { force: true });
         await this.page.keyboard.press('Enter');
         return;
-  
-      } catch (err) {
+      }
+      catch (err) {
         console.warn(`Attempt ${attempt + 1} failed: ${err.message}`);
         if (attempt === 2) throw err;
         await this.page.waitForTimeout(1000); 
@@ -174,8 +153,6 @@ export default class AssetsPage {
     }
   }
   
-  
-
   async sendEmail(){
     
     const sendEmailButton = this.page.locator('button.chakra-button.css-om4am7');

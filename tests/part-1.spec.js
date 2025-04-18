@@ -17,7 +17,6 @@ test.describe('Test part-1, Login and upload image', () => {
   let loginPage;
   let assetsPage;
 
-
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     assetsPage = new AssetsPage(page);
@@ -30,7 +29,6 @@ test.describe('Test part-1, Login and upload image', () => {
     await assetsPage.waitForDashboardLoad();
   });
   
-
   test('1 - Should be able to navigate to the correct URL', async ({ page }) => {
     await expect(page).toHaveTitle('SP | Brandshare DAM');
   });

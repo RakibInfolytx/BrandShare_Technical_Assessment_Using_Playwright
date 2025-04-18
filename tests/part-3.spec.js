@@ -5,7 +5,6 @@ import LoginPage from '../pages/LoginPage.js';
 import AssetsPage from '../pages/AssetsPage.js';
 import credentials from '../data/credentials.json';
 
-
 dotenv.config();
 
 dotenv.config();
