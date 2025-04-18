@@ -1,4 +1,3 @@
-// @ts-check
 const { defineConfig, devices } = require('@playwright/test');
 
 
@@ -13,6 +12,7 @@ module.exports = defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
+  retries: 0,
 
   use: {
     baseURL: process.env.BASE_URL || 'https://qatest.marcombox.com', 

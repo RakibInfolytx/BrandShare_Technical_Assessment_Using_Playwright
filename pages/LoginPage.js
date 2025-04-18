@@ -21,11 +21,9 @@ export default class LoginPage {
     await this.passwordField.fill(password);
   }
 
-  async ClicLogin() {
+  async ClickLogin() {
     await this.loginButton.click();
   }
 
-  async waitForDashboardLoad() {
-    await expect(this.page.locator('button#menu-button-116')).toBeVisible({ timeout: 20000 });
-  }
+  
 }

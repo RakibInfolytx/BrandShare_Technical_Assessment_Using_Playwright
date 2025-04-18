@@ -2,14 +2,13 @@ import { test, expect } from '@playwright/test';
 import LoginPage from '../pages/LoginPage.js';
 import AssetsPage from '../pages/AssetsPage.js';
 import credentials from '../data/credentials.json';
-import path from 'path';
 
-
-test.describe('Step 1', () => {
+test.describe('Step 2 - Uploaded Image Edit', () => {
+    test.setTimeout(150000);
   let loginPage;
   let assetsPage;
 
-  const imagePath = path.resolve('data/20.jpg');
+  const updatedTitle = 'QA Automation Engineer';
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
@@ -19,21 +18,33 @@ test.describe('Step 1', () => {
     await loginPage.TypeEmail(credentials.username);
     await loginPage.ClickNext();
     await loginPage.TypePassword(credentials.password);
-    await loginPage.ClicLogin();
-
+    await loginPage.ClickLogin();
+    await assetsPage.navigateToAssets();
   });
 
-  
-  test('- Should be able to upload an image', async () => {
-    const uploadedFileName = '20.jpg';
-    const expectedTitle = 'QA Automation Engineer';
-    const expectedType = 'Image';
+  test('Step 7 - Should open the item and verify Edit button exists', async () => {
+    await assetsPage.selectFile();
+    await assetsPage.isEditButtonVisible();
+  });
 
-    await assetsPage.navigateToAssets();
-    await assetsPage.uploadFile(imagePath);
-    await assetsPage.typeTitle(expectedTitle);
-    await assetsPage.selectType(expectedType);
-    await assetsPage.saveUploadedImage();
-    await assetsPage.verifyUpload(uploadedFileName, expectedTitle, expectedType);
+  test('Step 8 - Should edit title and verify Save button exists', async () => {
+    await assetsPage.selectFile();
+    await assetsPage.clickEdit();
+    await assetsPage.updateTitle(updatedTitle);
+    await assetsPage.isSaveButtonVisible();
+    await assetsPage.clickSave();
+  });
+
+  test('Step 9 - Should close the item and verify navigation to Assets page', async () => {
+    await assetsPage.selectFile();
+    await assetsPage.clickEdit();
+    await assetsPage.updateTitle(updatedTitle);
+    await assetsPage.clickSave();
+    await assetsPage.closeImage();
+    await assetsPage.isOnAssetsPage();
+  });
+
+  test('Step 10 - Should see the updated title in the asset list', async () => {
+    await assetsPage.isTitleVisibleInList(updatedTitle);
   });
 });
